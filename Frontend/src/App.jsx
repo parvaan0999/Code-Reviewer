@@ -11,7 +11,7 @@ import "./App.css";
 
 // Use environment variable to switch between local and deployed backend
 const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+  https://code-reviewer-4rol.onrender.com;
 
 function App() {
   const [code, setCode] = useState(`function sum(a, b) {

@@ -10,7 +10,9 @@ import axios from "axios";
 import "./App.css";
 
 // Use environment variable to switch between local and deployed backend
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "https://code-reviewer-4rol.onrender.com";
+
 
 function App() {
   const [code, setCode] = useState(`function sum(a, b) {

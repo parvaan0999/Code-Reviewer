@@ -4,7 +4,13 @@ const aiRoutes = require("./routes/ai.routes");
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://code-reviewer-11.onrender.com", // your frontend URL
+  methods: ["GET","POST"]
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.get("/", (req, res) => {

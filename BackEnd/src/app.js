@@ -4,12 +4,16 @@ const aiRoutes = require("./routes/ai.routes");
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://code-reviewer-11.onrender.com", // your frontend URL
-  methods: ["GET","POST"]
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: [
+      "https://code-reviewer-11.onrender.com", // frontend Render URL
+      "http://localhost:5173", // local dev
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 

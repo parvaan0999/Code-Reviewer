@@ -9,6 +9,10 @@ import "highlight.js/styles/github-dark.css";
 import axios from "axios";
 import "./App.css";
 
+// Use environment variable to switch between local and deployed backend
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 function App() {
   const [code, setCode] = useState(`function sum(a, b) {
   return a + b;
@@ -27,28 +31,35 @@ function App() {
     setReview("");
 
     try {
-      const response = await axios.post("http://localhost:5000/ai/get-review", {
-        code,
-        mode: selectedMode,
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/ai/get-review`,
+        { code, mode: selectedMode },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setReview(response.data.review || "No response received.");
     } catch (error) {
       console.error("Error fetching AI review:", error);
-      setReview("❌ Failed to get review. Please check backend or API key.");
+      setReview(
+        "❌ Failed to get review. Please check backend URL or CORS settings."
+      );
     }
 
     setLoading(false);
   }
 
   return (
-    <main>
+    <main className="app-container">
       {/* Left side: Code editor and buttons */}
       <div className="left">
         <div className="code">
           <Editor
             value={code}
-            onValueChange={(code) => setCode(code)}
+            onValueChange={(newCode) => setCode(newCode)}
             highlight={(code) =>
               prism.highlight(code, prism.languages.javascript, "javascript")
             }
